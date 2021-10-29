@@ -1,10 +1,8 @@
-require'lspconfig'.ccls.setup{} --conect C/C++ lsp 
-
 local nvim_lsp = require('lspconfig')
 
 local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_but_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.pi.nvim_buf_set_oprion(bufnt, ...) end
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnt, ...) end
 
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -29,4 +27,9 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
-
+nvim_lsp['ccls'].setup{
+    on_attach = on_attach,
+    flags = {
+        debounce_text_change = 150,
+    }
+}
